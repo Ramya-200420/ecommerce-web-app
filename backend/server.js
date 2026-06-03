@@ -7,20 +7,17 @@ const connectDB = require("./config/db");
 
 dotenv.config();
 
-// connect DB
+
 connectDB();
 
 const app = express();
 
-// =======================
-// MIDDLEWARES
-// =======================
 
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://your-vercel-app.vercel.app"
+      "https://ecommerce-web-app-one-alpha.vercel.app"
     ],
     credentials: true
   })
@@ -29,25 +26,19 @@ app.use(
 app.use(express.json());
 app.use(morgan("dev"));
 
-// =======================
-// ROUTES
-// =======================
+
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 
-// =======================
-// TEST ROUTE
-// =======================
+
 
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
-// =======================
-// SERVER START
-// =======================
+
 
 const PORT = process.env.PORT || 5000;
 
