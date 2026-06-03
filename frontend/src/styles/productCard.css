@@ -61,3 +61,23 @@
 .cart-btn:hover {
   background: #1e40af;
 }
+
+@media (max-width: 768px) {
+  .product-image {
+    height: 160px;
+  }
+
+  .product-name {
+    font-size: 16px;
+  }
+
+  .price-badge {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .cart-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
