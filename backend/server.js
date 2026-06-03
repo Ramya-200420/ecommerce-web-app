@@ -7,25 +7,47 @@ const connectDB = require("./config/db");
 
 dotenv.config();
 
+// connect DB
 connectDB();
 
 const app = express();
 
-// Middlewares
-app.use(cors());
+// =======================
+// MIDDLEWARES
+// =======================
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://your-vercel-app.vercel.app"
+    ],
+    credentials: true
+  })
+);
+
 app.use(express.json());
 app.use(morgan("dev"));
 
-// Routes
+// =======================
+// ROUTES
+// =======================
+
 app.use("/api/auth", require("./routes/authRoutes"));
-
 app.use("/api/products", require("./routes/productRoutes"));
-
 app.use("/api/orders", require("./routes/orderRoutes"));
-// Test Route
+
+// =======================
+// TEST ROUTE
+// =======================
+
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
+
+// =======================
+// SERVER START
+// =======================
 
 const PORT = process.env.PORT || 5000;
 
