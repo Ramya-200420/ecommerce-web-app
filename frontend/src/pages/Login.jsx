@@ -22,39 +22,30 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await API.post(
-        "/auth/login",
-        formData
-      );
+      const res = await API.post("/auth/login", formData);
 
-      localStorage.setItem(
-        "token",
-        res.data.token
-      );
+      const user = res.data.user;
+      const token = res.data.token;
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(res.data.user)
-      );
+      // save login data
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       alert("Login Successful");
 
+      // 🔥 IMPORTANT: trigger navbar refresh without reload bugs
+      window.dispatchEvent(new Event("storage"));
+
       navigate("/");
-      window.location.reload();
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Login Failed"
-      );
+      alert(error.response?.data?.message || "Login Failed");
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1 className="auth-title">
-          Login
-        </h1>
+        <h1 className="auth-title">Login</h1>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -75,10 +66,7 @@ const Login = () => {
             onChange={handleChange}
           />
 
-          <button
-            className="auth-btn"
-            type="submit"
-          >
+          <button className="auth-btn" type="submit">
             Login
           </button>
         </form>
